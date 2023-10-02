@@ -67,7 +67,8 @@ else:
             return False
         avail = ctypes.c_long()
         if PeekNamedPipe(h, None, 0, None, ctypes.byref(avail), None) == 0:
-            raise ctypes.WinError()
+            return
+            #raise ctypes.WinError()
         return avail.value != 0
 
 
@@ -153,7 +154,8 @@ class ProxyCommand(ClosingContextManager):
                 return buffer
             raise  # socket.timeout is a subclass of IOError
         except IOError as e:
-            raise ProxyCommandFailure(" ".join(self.cmd), e.strerror)
+            return
+            # raise ProxyCommandFailure(" ".join(self.cmd), e.strerror)
 
     def close(self):
         self.process.terminate()
