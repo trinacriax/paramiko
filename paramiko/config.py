@@ -265,6 +265,9 @@ class SSHConfig:
             ):
                 continue
             for key, value in context["config"].items():
+                if(key=="proxycommand"):
+                    if(value[0]!="\""):
+                        value="\""+value[0:value.index(' ', value.rfind("\\"),len(value))]+"\""+value[value.index(' ', value.rfind("\\"),len(value)):len(value)]
                 if key not in options:
                     # Create a copy of the original value,
                     # else it will reference the original list
