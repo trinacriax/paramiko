@@ -215,7 +215,9 @@ class AuthHandler:
         Intended for input to or verification of, key signatures.
         """
         # Use certificate contents, if available, plain pubkey otherwise
-        if key.public_blob:
+        # if key.public_blob:
+        # Implementing fix proposed in https://github.com/paramiko/paramiko/issues/2462
+        if hasattr(key, "public_blob") and key.public_blob:
             return key.public_blob.key_type, key.public_blob.key_blob
         else:
             return key.get_name(), key
